@@ -1,11 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyRequestData } from '@/utils/utils';
-
+import { channelModel } from '@/models';
 /**
  * GET /api/channels
  */
 export const getChannels = async (req: Request, res: Response, next: NextFunction) => {
-  res.json({ channels: [] });
+  const [channelList] = await channelModel.getChannels();
+  res.json({ channelList });
 };
 
 /**
