@@ -1,6 +1,7 @@
 import React from 'react';
 import io from 'socket.io-client';
 import { Header } from '@/components';
+import Page from '@/components/study';
 import axios from 'axios';
 
 const domain = 'http://localhost:3000';
@@ -69,6 +70,7 @@ const App = () => {
         Send msg to channel1
       </button>
       <Header />
+      <Page />
     </div>
   );
 };
