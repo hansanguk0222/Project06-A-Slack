@@ -2,8 +2,8 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
-import { loadChannelRequest } from '@/store/modules/channel.slice';
-import { useJoinChannelListState, useChannelState } from '@/hooks';
+import { loadChannelRequest, modifyLastChannelRequest } from '@/store/modules/channel.slice';
+import { useJoinChannelListState, useChannelState, useUserState } from '@/hooks';
 import { flex } from '@/styles/mixin';
 import { LockIcon, PoundIcon } from '@/components';
 
@@ -47,11 +47,14 @@ const ChannelItem = ({ idx }: ChannelItemProps) => {
   const dispatch = useDispatch();
   const { id, name, isPublic } = useJoinChannelListState(idx);
   const { current } = useChannelState();
-
+  const { userInfo } = useUserState();
   const picked = id === current?.id;
 
   const onClick = () => {
     dispatch(loadChannelRequest(id));
+    if (userInfo && current) {
+      dispatch(modifyLastChannelRequest({ lastChannelId: current?.id, userId: userInfo.id }));
+    }
   };
 
   return (
